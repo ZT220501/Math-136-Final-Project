@@ -14,19 +14,23 @@ This code is a modification of the code in C. Pozrikidis's book
 import numpy as np
 import matplotlib.pyplot as plt
 import copy
+from matplotlib.animation import FuncAnimation
+from matplotlib import cm
+
 import pandas as pd
+
 
 '''
 Parameters
 '''
 Vlid = 1.0                                  #lid velocity
-Lx = 2.0                                    #cavity dimensions
-Ly = 1.0                               
+Lx = 2                                    #cavity dimensions
+Ly = 1                               
 T = 10                                      #maximum time
 
-Nx = 16
-Ny = 8                                     #grid size
-Nt = 150
+Nx = 32
+Ny = 16                                     #grid size
+Nt = 500
 visc = 0.01                                 #viscosity
 rho = 1.0                                   #density
 relax = 0.5                                 #relaxation parameter
@@ -65,17 +69,23 @@ for i in range(Nx+1):
         psi[i][j] = 0.0                      #stream function
         vort[i][j] = -vort_init
         
-ux = np.zeros((Nx+1, Ny+1)).tolist()
-uy = np.zeros((Nx+1, Ny+1)).tolist()
+ux = np.zeros((Nx+1, Ny+1))
+uy = np.zeros((Nx+1, Ny+1))
 #Set the initial speed for the grid along the lid
 for i in range(Nx+1):
     ux[i][Ny] = Vlid
 
-psi_total = [psi]
-vort_total = [vort]
+psi_total = [np.array(psi).T]
+vort_total = [np.array(vort).T]
+ux_total = [np.array(ux).T]
+uy_total = [np.array(uy).T]
 
 
 for time_step in range(Nt):
+    psi = copy.deepcopy(psi_total[-1].T)
+    vort = copy.deepcopy(vort_total[-1].T)
+    ux = copy.deepcopy(ux_total[-1].T)
+    uy = copy.deepcopy(uy_total[-1].T)
     '''
     Obtain vorticity using the definition
     '''
@@ -116,13 +126,14 @@ for time_step in range(Nt):
             ux[i][j] = (psi[i][j+1]-psi[i][j-1])/(2*Dy)
             uy[i][j] = -(psi[i+1][j]-psi[i-1][j])/(2*Dx)
             
-    psi_total.append(psi)
-    vort_total.append(vort)
-
-
+    psi_total.append(np.array(psi).T)
+    vort_total.append(np.array(vort).T)
+    ux_total.append(np.array(ux).T)
+    uy_total.append(np.array(uy).T)
+    
 
 '''
-Plot the results
+Do the result animation
 '''
 xgr = []
 ygr = []
@@ -131,15 +142,16 @@ for i in range(Nx+1):
 for j in range(Ny+1):
     ygr.append(Dy*j)
     
+X, Y = np.meshgrid(np.array(xgr), np.array(ygr))
+    
+for t in range(Nt):
+    plt.quiver(X, Y, ux_total[t], uy_total[t], color='blue')
+    plt.contour(xgr,ygr,np.array(psi_total[t]).tolist(), 8)
+    plt.grid()
+    plt.show()
+    plt.pause(0.01)
 
 
-plt.contour(xgr,ygr,np.array(psi_total[5]).T.tolist(), 8)
-# =============================================================================
-# plt.xlabel('x','fontsize',15)
-# plt.ylabel('y','fontsize',15)
-# plt.zlabel('\psi','fontsize',15)
-# =============================================================================
-plt.axis([0, Lx, 0, Ly])
 
 
 
