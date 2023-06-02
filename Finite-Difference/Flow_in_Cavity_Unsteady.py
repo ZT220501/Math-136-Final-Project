@@ -14,7 +14,7 @@ This code is a modification of the code in C. Pozrikidis's book
 import numpy as np
 import matplotlib.pyplot as plt
 import copy
-from matplotlib.animation import FuncAnimation
+from matplotlib import animation
 from matplotlib import cm
 
 import pandas as pd
@@ -31,7 +31,7 @@ T = 10                                      #maximum time
 Nx = 32
 Ny = 16                                     #grid size
 Nt = 500
-visc = 0.01                                 #viscosity
+visc = 0.02                                 #viscosity
 rho = 1.0                                   #density
 relax = 0.5                                 #relaxation parameter
 Niteri = 5                                  #number of inner iterations
@@ -53,6 +53,8 @@ beta = Dxs/Dys
 beta1 = 2.0*(1.0+beta)
 nu = visc/rho                               #kinematic viscosity
 tol = 1e-8
+
+print("Reynolds number is " + str(Vlid*Lx/nu))
 
 '''
 Generate the grid
@@ -90,12 +92,12 @@ for time_step in range(Nt):
     Obtain vorticity using the definition
     '''
     #Top and bottoem wall
-    for i in range(Nx+1):
+    for i in range(1, Nx):
         vort[i][0] = (-4*ux[i][1]+ux[i][2])/(2*Dy)
         vort[i][Ny] = (-3*Vlid+4*ux[i][Ny-1]-ux[i][Ny-2])/(2*Dy)
         
     #Left and right wall
-    for i in range(Ny+1):
+    for i in range(1, Ny):
         vort[0][i] = (4*uy[1][i]-uy[2][i])/(2*Dx)
         vort[Nx][i] = (-4*uy[Nx-1][i]+uy[Nx-2][i])/(2*Dx)
      
@@ -135,6 +137,7 @@ for time_step in range(Nt):
 '''
 Do the result animation
 '''
+
 xgr = []
 ygr = []
 for i in range(Nx+1):
@@ -142,14 +145,27 @@ for i in range(Nx+1):
 for j in range(Ny+1):
     ygr.append(Dy*j)
     
-X, Y = np.meshgrid(np.array(xgr), np.array(ygr))
     
-for t in range(Nt):
-    plt.quiver(X, Y, ux_total[t], uy_total[t], color='blue')
-    plt.contour(xgr,ygr,np.array(psi_total[t]).tolist(), 8)
-    plt.grid()
-    plt.show()
-    plt.pause(0.01)
+fig, ax = plt.subplots(1,1)
+Q = ax.quiver(xgr, ygr, ux_total[0], uy_total[0], color='blue')
+
+ax.set_xlim(0, Lx)
+ax.set_ylim(0, Ly)
+
+def update_quiver(t, Q, ux_total, uy_total):
+
+
+    Q.set_UVC(ux_total[t], uy_total[t])
+
+    return Q,
+
+# you need to set blit=False, or the first set of arrows never gets
+# cleared on subsequent frames
+anim = animation.FuncAnimation(fig, update_quiver, fargs=(Q, ux_total, uy_total), frames=Nt,
+                               interval=50, blit=False)
+fig.tight_layout()
+plt.show()
+anim.save("test.gif", writer = 'ffmpeg', fps = 30)
 
 
 
