@@ -7,7 +7,7 @@ Created on Tue May 16 18:38:41 2023
 
 '''
 Code for running explicit finite difference method for solving the flow in cavity.
-This code is a modification of the code in C. Pozrikidis's book
+This code is based on the algorithm in C. Pozrikidis's book
 '''
 
 import numpy as np
@@ -24,7 +24,8 @@ Ly = 1.0
 
 Nx = 32
 Ny = 16                                     #grid size
-visc = 0.01                                 #viscosity
+visc = 1                                #viscosity
+#visc = 2
 rho = 1.0                                   #density
 relax = 0.5                                 #relaxation parameter
 Niteri = 5                                  #number of inner iterations
@@ -141,7 +142,6 @@ for iter in range(Niterg):
     for i in range(Nx+1):
         for j in range(Ny+1):
             res = abs(vort[i][j]-save[i][j])
-            print(res)
             if res > cormax:
                 cormax = res
         
@@ -161,15 +161,24 @@ for i in range(Nx+1):
 for j in range(Ny+1):
     ygr.append(Dy*j)
     
-
-
-plt.contour(xgr,ygr,np.array(psi).T.tolist(), 32)
-# =============================================================================
-# plt.xlabel('x','fontsize',15)
-# plt.ylabel('y','fontsize',15)
-# plt.zlabel('\psi','fontsize',15)
-# =============================================================================
+    
+plt.contour(xgr,ygr,np.array(psi).T.tolist(), 16)
 plt.axis([0, Lx, 0, Ly])
+
+
+xgr = []
+ygr = []
+for i in range(Nx+1):
+    xgr.append(Dx*i)
+for j in range(Ny+1):
+    ygr.append(Dy*j)
+    
+X, Y = np.meshgrid(np.array(xgr), np.array(ygr))
+    
+
+plt.quiver(X, Y, np.array(ux).T.tolist(), np.array(uy).T.tolist(), color='blue')
+plt.grid()
+plt.show()
 
 
 

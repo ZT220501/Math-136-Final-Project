@@ -23,16 +23,19 @@ import pandas as pd
 '''
 Parameters
 '''
-Vlid = 1.0                                  #lid velocity
+Vlid = 5                                  #lid velocity
 Lx = 2                                    #cavity dimensions
 Ly = 1                               
-T = 10                                      #maximum time
+T = 20                                      #maximum time
 
 Nx = 32
 Ny = 16                                     #grid size
-Nt = 500
-visc = 0.02                                 #viscosity
-rho = 1.0                                   #density
+Nt = 1000
+
+visc = 0.01                                 #viscosity
+rho = 2                                   #density
+
+
 relax = 0.5                                 #relaxation parameter
 Niteri = 5                                  #number of inner iterations
 Niterg = 100                                #number of global iterations
@@ -147,7 +150,7 @@ for j in range(Ny+1):
     
     
 fig, ax = plt.subplots(1,1)
-Q = ax.quiver(xgr, ygr, ux_total[0], uy_total[0], color='blue')
+Q = ax.quiver(xgr, ygr, ux_total[0], uy_total[0], color='blue', scale=8)
 
 ax.set_xlim(0, Lx)
 ax.set_ylim(0, Ly)
@@ -165,7 +168,7 @@ anim = animation.FuncAnimation(fig, update_quiver, fargs=(Q, ux_total, uy_total)
                                interval=50, blit=False)
 fig.tight_layout()
 plt.show()
-anim.save("test.gif", writer = 'ffmpeg', fps = 30)
+anim.save("High_Reynold_Simulation_Re2000.gif", writer = 'ffmpeg', fps = 30)
 
 
 
