@@ -20,6 +20,13 @@ from matplotlib import cm
 import pandas as pd
 
 
+
+'''
+Reynolds number 2: Vlid = 1, Nt = 200, visc = 1, rho = 1
+Reynolds number 200: Vlid = 1, Nt = 200, visc = 0.01, rho = 1
+Reynolds number 2000: Vlid = 5, Nt = 1000, visc = 0.01, rho = 2
+'''
+
 '''
 Parameters
 '''
