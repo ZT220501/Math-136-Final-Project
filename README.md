@@ -1,5 +1,5 @@
 # Math-136-Final-Project
-This project is a simulation of the unidirectional flow problem and flow in a cavity problem.\
+This project is a simulation of the unidirectional flow problem and flow in a cavity problem.
 
 ![](https://github.com/ZT220501/Math-136-Final-Project/blob/main/Result/uniflow_explicit_trivial_boundary.gif) 
 ![](https://github.com/ZT220501/Math-136-Final-Project/blob/main/Result/uniflow_explicit_trivial_boundary_unstable.gif)
