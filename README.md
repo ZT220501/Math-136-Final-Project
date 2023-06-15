@@ -12,6 +12,6 @@ The two animations above are the explicit finite difference results for unidirec
 
 The two animations above are the implicit finite difference results for unidirectional flow horizontal velocity as a function of vertical axis $y$. The first one is the caes when $\alpha=0.49$ and the second one is the case when $\alpha=0.51$. In both case, the finite difference method gives stable result.\\
 
-For more results regarding non-trivial constant boundary condition and sinuosoidal boundary
+Results of unidirectional flow non-trivial constant boundary condition and sinuosoidal boundary conditionss can be found under the result folder.
 
 ![](https://github.com/ZT220501/Math-136-Final-Project/blob/main/Result/Low_Reynold_Simulation_Re2.gif)
