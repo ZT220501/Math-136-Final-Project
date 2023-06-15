@@ -7,5 +7,8 @@ For unidirectional flow problem finite difference method, the explicit and impli
 
 The two animations above are the explicit finite difference results for unidirectional flow horizontal velocity as a function of vertical axis $y$. The first one is the caes when $\alpha=0.49$ and the second one is the case when $\alpha=0.51$. Clearly the case $\alpha=0.51$ is extremely unstable.
 
+![](https://github.com/ZT220501/Math-136-Final-Project/blob/main/Result/uniflow_implicit_trivial_boundary0.49.gif)
+![](https://github.com/ZT220501/Math-136-Final-Project/blob/main/Result/uniflow_implicit_trivial_boundary0.51.gif)
+
 
 ![](https://github.com/ZT220501/Math-136-Final-Project/blob/main/Result/Low_Reynold_Simulation_Re2.gif)
