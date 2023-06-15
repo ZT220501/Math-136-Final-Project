@@ -15,3 +15,7 @@ The two animations above are the implicit finite difference results for unidirec
 Results of unidirectional flow non-trivial constant boundary condition and sinuosoidal boundary conditionss can be found under the result folder.
 
 ![](https://github.com/ZT220501/Math-136-Final-Project/blob/main/Result/Low_Reynold_Simulation_Re2.gif)
+![](https://github.com/ZT220501/Math-136-Final-Project/blob/main/Result/Middle_Reynold_Simulation_Re200.gif)
+![](https://github.com/ZT220501/Math-136-Final-Project/blob/main/Result/High_Reynold_Simulation_Re2000.gif)
+
+The three animations above are the cases in the order when Reynolds number $Re=2$, $Re=200$, and $Re=2000$. The steady cases can be found in the result folder.
